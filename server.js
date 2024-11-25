@@ -1,7 +1,26 @@
 const express  = require("express")
+const morgan = require("morgan")
+
 const app = express()
 
 app.use(express.json())
+
+// app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent" :body'))
+
+// app.use(morgan('combined'))
+morgan.token('body', req=> {
+  return JSON.stringify(req.body)
+})
+
+//  morgan.token('body',function getReqBodyToken(req){
+//        req.logBody = req.body
+// })
+
+
+ app.use(morgan(':body :method :url :response-time :req[header]'))
+// app.use(morgan('tiny'))
+
+
 
 let persons =[
     { 
@@ -70,12 +89,14 @@ app.post('/api/persons',(req,res)=>{
       if(errors ) 
       {
 
-        console.log(errors)
+        console.log('validation error',errors)
         res.status(404)
         res.send(errors)
          
 
       }else{
+
+        console.log('no error')
         
         const person = {
           "id": GenerateId(1,100),
@@ -102,7 +123,6 @@ app.post('/api/persons',(req,res)=>{
   }
 
   
-
 })
 
 const GenerateId=(min, max)=>
@@ -115,20 +135,24 @@ const GenerateId=(min, max)=>
 const validate=(payload)=>
 {
   console.log('payload',payload)
-  let error={}//[]
+  let error=null//[]
   if(!payload.name)
     error={"error":"name is missing"}//error.push({"error":"name is missing"})
   else if(!payload.number)
    error={"error":"number is missing"}// error.push({"error":"number is missing"})
-  else if(persons.find(p=>p.name==payload.name))
+  else if(persons.find(p=>p.name===payload.name))
   {
-    console.log('duplicate',persons.find(p=>p.name==payload.name))
+    console.log('duplicate',persons.find(p=>p.name===payload.name))
     error={"error":"name already exist in phonebook"}// error.push({"error":"name already exist in phonebook"})
 
   }
     console.log("validation error",error)
     return error
  }
+
+
+
+
 
 const PORT = 3001
 app.listen(PORT,()=>console.log(`APP running and listening on the port ${PORT}`))
