@@ -4,6 +4,7 @@ const morgan = require("morgan")
 const app = express()
 
 app.use(express.json())
+app.use(express.static('build'))
 
 // app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent" :body'))
 
@@ -152,7 +153,7 @@ const validate=(payload)=>
 
 
 
+ const PORT = process.env.PORT || 3001
 
 
-const PORT = 3001
 app.listen(PORT,()=>console.log(`APP running and listening on the port ${PORT}`))
