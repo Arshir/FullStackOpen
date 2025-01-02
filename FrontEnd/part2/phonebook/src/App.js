@@ -110,7 +110,7 @@ const App = () => {
           }else{
 
             personService.create(newperson).then(addedPerson=>{ 
-              setPersons([...persons,addedPerson])
+              setPersons([...persons,newperson])
               setDisplayMessage(<div style={{color:'green',borderStyle:'solid',borderColor:'green'}}>The contact {addedPerson.name} was added  successfully with phone number: {addedPerson.number}</div>)
               setTimeout(()=>{setDisplayMessage(null)},5000)
             }).catch(error=>{
