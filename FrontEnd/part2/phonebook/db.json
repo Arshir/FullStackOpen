@@ -1,0 +1,29 @@
+{
+  "persons": [
+    {
+      "name": "Arto Helias",
+      "number": "040-123456",
+      "id": 1
+    },
+    {
+      "name": "Ada Lovelace",
+      "number": "39-44-5323523",
+      "id": 2
+    },
+    {
+      "name": "Dan Abramov",
+      "number": "12-43-234345",
+      "id": 3
+    },
+    {
+      "name": "Fareed Mohammed",
+      "number": "0240856309",
+      "id": 4
+    },
+    {
+      "name": "Issaka Faisal",
+      "number": "0244656852",
+      "id": 5
+    }
+  ]
+}
