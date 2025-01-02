@@ -99,7 +99,8 @@ const App = () => {
               return p;
               });
 
-              setPersons(personLst);
+              //setPersons(personLst);
+              getPerson()
 
               setDisplayMessage(<div style={{color:'green',borderStyle:'solid',borderColor:'green'}}>The phonenumber for  {newName} has been updated successfully to {phoneNumber}</div>)
               setTimeout(()=>{setDisplayMessage(null)},5000)
@@ -110,7 +111,8 @@ const App = () => {
           }else{
 
             personService.create(newperson).then(addedPerson=>{ 
-              setPersons([...persons,newperson])
+             // setPersons([...persons,newperson])
+              getPerson()
               setDisplayMessage(<div style={{color:'green',borderStyle:'solid',borderColor:'green'}}>The contact {addedPerson.name} was added  successfully with phone number: {addedPerson.number}</div>)
               setTimeout(()=>{setDisplayMessage(null)},5000)
             }).catch(error=>{
