@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/Arshir/Phonebook-Backend#readme",
   "dependencies": {
+    "dotenv": "^16.4.7",
     "express": "^4.21.1",
     "mongoose": "^8.9.4",
     "morgan": "^1.10.0",

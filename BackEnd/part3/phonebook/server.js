@@ -1,3 +1,6 @@
+require('dotenv').config()
+
+
 const express  = require("express")
 const morgan = require("morgan")
 
@@ -5,6 +8,8 @@ const app = express()
 
 app.use(express.json())
 app.use(express.static('build'))
+
+const contactModel = require('./models/phonebook.js')
 
 // app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent" :body'))
 
@@ -47,7 +52,12 @@ let persons =[
 ]
 
 app.get('/api/persons',(req,res)=>{
-    res.json(persons)
+  
+    contactModel.find({})
+    .then(ls=> {
+       console.log('result ',ls)
+      res.json(ls)})
+    .catch(error=>{res.status(400).json({error: `Error encountered when getting all contacts ${error.message}`})})    
 })
 
 app.get('/info',(req,res)=>{
@@ -98,17 +108,23 @@ app.post('/api/persons',(req,res)=>{
       }else{
 
         console.log('no error')
+
+        const personContact = new contactModel({
+          "name": item.name,
+          "number": item.number
+        })
         
-        const person = {
-          "id": GenerateId(1,100),
+       /* const person = {
+         /// "id": GenerateId(1,100),
           "name": item.name,
           "number": item.number
         }
-        
-        persons.push(person)
+        */
+        //persons.push(person)
+        personContact.save().then(person=>{
     
         res.status(201).send(`New contact added to the phone with Id ${person.id} and name ${person.name} and number ${person.number}`)
-
+          })
       }
        
 
