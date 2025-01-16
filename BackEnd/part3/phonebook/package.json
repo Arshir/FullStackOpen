@@ -8,7 +8,7 @@
     "dev": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:ui": "rm -rf build && cd ../../../frontend/part2/phonebook/ && npm run build && cp -r build ../../../backend/part3/phonebook/",
-     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push"
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
   "homepage": "https://github.com/Arshir/Phonebook-Backend#readme",
   "dependencies": {
     "express": "^4.21.1",
+    "mongoose": "^8.9.4",
     "morgan": "^1.10.0",
     "uuid": "^11.0.3"
   },
