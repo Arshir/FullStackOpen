@@ -57,7 +57,10 @@ app.get('/api/persons',(req,res)=>{
     .then(ls=> {
        console.log('result ',ls)
       res.json(ls)})
-    .catch(error=>{res.status(400).json({error: `Error encountered when getting all contacts ${error.message}`})})    
+    .catch(error=>{
+      next(error)
+      //res.status(400).json({error: `Error encountered when getting all contacts ${error.message}`})
+    })    
 })
 
 app.get('/info',(req,res)=>{
@@ -68,26 +71,51 @@ app.get('/info',(req,res)=>{
 
 app.get('/api/persons/:id',(req,res)=>{
     const personId = req.params.id
-    const person = persons.filter(p=>p.id==personId)
-    if(person.length>0)
-      res.json(person)
-    else
-    {
-        res.statusMessage="No phonebook entry found for this ID "+ personId
-        res.status(404)
-        res.send(`No phonebook entry found for this ID  ${personId}`)
+    contactModel.findById(personId).
+    then( person=>{
+        if(person){
+          res.json(person)
+        }else{
+          res.statusMessage="No phonebook entry found for this ID "+ personId
+         res.status(404)
+         res.send(`No phonebook entry found for this ID  ${personId}`)
 
+        }
     }
-      
+     
+    ).catch(error=>
+        next(error)
+     // res.status(400).send(`Bad request receive from client. Please send proper request.${error}`)
+    )
+        
 })
 
-app.delete('/api/persons/:id',(req,res)=>{
+app.delete('/api/persons/:id',(req,res,next)=>{
   const personId = req.params.id
-  persons = persons.filter(p=>p.id!==personId)
-  res.status(204).end()
+  contactModel.findByIdAndDelete(personId).
+  then(result=>
+     res.status(204).end()
+  )
+  .catch(error=> next(error))
 })
 
-app.post('/api/persons',(req,res)=>{
+app.put('/api/persons/:id',(req,res,next)=>{
+   const body = req.body
+   if(body)
+   {
+     const person = {
+      name: body.name,
+      number: body.number
+     }
+       console.log('update person',person)
+     contactModel.findByIdAndUpdate(req.params.id, person,{new:true})
+     .then(result=> res.json(result))
+     .catch(error=>next(error))
+   }
+
+})
+
+app.post('/api/persons',(req,res,next)=>{
   const item = req.body
   try{
 
@@ -136,7 +164,8 @@ app.post('/api/persons',(req,res)=>{
     }
 
   } catch (error){
-    res.send(`The following error occurred while adding new entries with details as ${error}`)
+   // res.send(`The following error occurred while adding new entries with details as ${error}`)
+     next(error)
   }
 
   
@@ -167,6 +196,12 @@ const validate=(payload)=>
     return error
  }
 
+ const errorHandler =(error,req,res,next)=>{
+     res.status(500).send(`An error was encountered while running the task ${error}. Please try again or contact Administrator`)
+     
+ }
+
+ app.use(errorHandler)
 
 
  const PORT = process.env.PORT || 3001
