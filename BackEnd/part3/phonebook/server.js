@@ -64,10 +64,19 @@ app.get('/api/persons',(req,res)=>{
 })
 
 app.get('/info',(req,res)=>{
-    let people = persons.length
-    let reqTime = Date();
-    res.send(`Phonebook has info for ${people} people <br> ${reqTime}`)
-})
+    
+    let count = contactModel.countDocuments().then(count=>{
+      let reqTime = Date();
+      res.send(`Phonebook has info for ${count} people <br> ${reqTime}`)
+      
+    }
+      ).catch(error=> res.send('error occurred when getting contact count'))
+  
+    
+     
+
+});
+  
 
 app.get('/api/persons/:id',(req,res)=>{
     const personId = req.params.id

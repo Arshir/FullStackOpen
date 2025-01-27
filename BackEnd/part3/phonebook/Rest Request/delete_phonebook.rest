@@ -14,8 +14,8 @@ POST http://localhost:3001/api/persons
 Content-Type:application/json
 
 {
-   "name":"Iss",
-   "number":"0244656852"
+   "name":"MMA",
+   "number":"0500074004"
    
 }
 
