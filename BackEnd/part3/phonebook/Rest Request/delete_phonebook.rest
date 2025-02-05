@@ -1,6 +1,6 @@
 GET http://localhost:3001/api/persons
 ###
-GET http://localhost:3001/api/persons/678990f035633bd533782892
+GET http://localhost:3001/api/persons/67a23197e820395563805e58
 
 ###
 GET http://localhost:3001/info
@@ -14,18 +14,18 @@ POST http://localhost:3001/api/persons
 Content-Type:application/json
 
 {
-   "name":"MMA",
-   "number":"0500074004"
+   "name":"Buubuu",
+   "number":"09-1234556"
    
 }
 
 ###
 
-PUT http://localhost:3001/api/persons/1
+PATCH  http://localhost:3001/api/persons/67a23197e820395563805e58
 Content-Type:application/json
 
 {
-   "name":"Iss",
-   "number":"0244656851"
+   "name":"Buubuu",
+   "number":"09-12345785"
    
 }

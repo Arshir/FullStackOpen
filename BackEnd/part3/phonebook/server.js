@@ -108,7 +108,7 @@ app.delete('/api/persons/:id',(req,res,next)=>{
   .catch(error=> next(error))
 })
 
-app.put('/api/persons/:id',(req,res,next)=>{
+app.patch('/api/persons/:id',(req,res,next)=>{
    const body = req.body
    if(body)
    {
@@ -161,6 +161,9 @@ app.post('/api/persons',(req,res,next)=>{
         personContact.save().then(person=>{
     
         res.status(201).send(`New contact added to the phone with Id ${person.id} and name ${person.name} and number ${person.number}`)
+          }).catch(error=>{
+            console.log('logging',error)
+            res.status(500).json({error:error})
           })
       }
        
