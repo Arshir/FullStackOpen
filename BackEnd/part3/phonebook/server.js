@@ -219,4 +219,4 @@ const validate=(payload)=>
  const PORT = process.env.PORT || 3001
 
 
-app.listen(PORT,()=>console.log(`APP running and listening on the port ${PORT}`))
+app.listen(PORT,() => console.log(`APP running and listening on the port ${PORT}`))

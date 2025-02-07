@@ -28,6 +28,9 @@
     "uuid": "^11.0.3"
   },
   "devDependencies": {
+    "@eslint/js": "^9.19.0",
+    "@stylistic/eslint-plugin-js": "^3.0.1",
+    "eslint": "^9.19.0",
     "nodemon": "^3.1.7"
   }
 }
