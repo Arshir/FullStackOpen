@@ -108,7 +108,7 @@ app.delete('/api/persons/:id',(req,res,next)=>{
   .catch(error=> next(error))
 })
 
-app.patch('/api/persons/:id',(req,res,next)=>{
+app.put('/api/persons/:id',(req,res,next)=>{
    const body = req.body
    if(body)
    {
