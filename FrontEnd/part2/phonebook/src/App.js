@@ -44,7 +44,7 @@ const App = () => {
   const handleRemove=(event,id)=>{
       event.preventDefault()
       console.log('remove button is clicked to remove person with id',id);
-      if(id>0){
+      if(id){
         if(window.confirm(`Are you sure you want to delete ${id}`))
         {
 
@@ -81,8 +81,9 @@ const App = () => {
           console.log('Persons list during update',persons);
           const updatePerson= persons.find(p=>p.name===newName);
           updatePerson.number= phoneNumber;
+         
           console.log('update person',updatePerson);
-          if( !window.confirm(`${updatePerson.name} is already added to phonebook, replace the old number with a new one`))
+          if( !window.confirm(`${updatePerson.name} is already added to phonebook, do you want to update the phone number ?`))
               return ;
         // setNewName('') 
         //return
@@ -98,7 +99,7 @@ const App = () => {
                 console.log(p);
               return p;
               });
-
+              
               //setPersons(personLst);
               getPerson()
 
@@ -110,13 +111,21 @@ const App = () => {
             });
           }else{
 
-            personService.create(newperson).then(addedPerson=>{ 
+            personService.create(newperson).then(result=>{ 
              // setPersons([...persons,newperson])
+               console.log('create message',result)
+               console.log('error message',result.message)
               getPerson()
-              setDisplayMessage(<div style={{color:'green',borderStyle:'solid',borderColor:'green'}}>The contact {addedPerson.name} was added  successfully with phone number: {addedPerson.number}</div>)
+              if(!result.error)
+               setDisplayMessage(<div style={{color:'green',borderStyle:'solid',borderColor:'green'}}>The contact {result.name} was added  successfully with phone number: {result.number}</div>)
+              else
+               setDisplayMessage(<div style={{color:'red',borderStyle:'Solid',borderColor:'red'}}>{result.error.message} </div>)
+
               setTimeout(()=>{setDisplayMessage(null)},5000)
             }).catch(error=>{
-              alert('Error adding new person to the list at the server. Please try again');
+              alert(`Error adding new person to the list at the server ${error}. Please try again`);
+             
+              setTimeout(()=>{setDisplayMessage(null)},5000)
               setPersons(persons)
             })
           }
@@ -141,7 +150,7 @@ const App = () => {
        <PersonForm nameInput={nameInput} numberInput={numberInput} submitButton={submitButton} />
       <h2>Numbers</h2>
       <ul>
-        {personsToShow.map((p)=><li key={p.name}>{p.name} {p.number}  <Button label='remove' onSubmitHandler={(event)=>handleRemove(event,p.id)} /> </li>)}
+        {personsToShow.map((p)=><li key={p.id}>{p.name} {p.number}  <Button label='remove' onSubmitHandler={(event)=>handleRemove(event,p.id)} /> </li>)}
        
       </ul>
       <div>debug: {newName}</div>
