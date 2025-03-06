@@ -1,0 +1,31 @@
+GET http://localhost:3001/api/persons
+###
+GET http://localhost:3001/api/persons/67a23197e820395563805e58
+
+###
+GET http://localhost:3001/info
+###
+
+DELETE http://localhost:3001/api/persons/678990f035633bd533782892
+
+###
+
+POST http://localhost:3001/api/persons
+Content-Type:application/json
+
+{
+   "name":"Booboo",
+   "number":"09-1234556"
+   
+}
+
+###
+
+PATCH  http://localhost:3001/api/persons/67a23197e820395563805e58
+Content-Type:application/json
+
+{
+   "name":"Buubuu",
+   "number":"09-12345785"
+   
+}
