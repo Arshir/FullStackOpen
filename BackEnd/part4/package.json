@@ -1,0 +1,22 @@
+{
+  "name": "bloglist",
+  "version": "1.0.0",
+  "description": "This application help users save information including author, title, URL, and amount of upvotes of interesting blogs they stumbled across on the internet ",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --watch index.js",
+    "test": "node --test",
+    "lint": "eslint ."
+  },
+  "keywords": [
+    "blog"
+  ],
+  "author": "arshir",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.12.1"
+  }
+}
