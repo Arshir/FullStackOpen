@@ -21,7 +21,15 @@ const getTotalLikes=(blogs)=>{
 
 }
 
+const getFavouriteBlog =(blogs)=>{
+
+    let favoriteBlog ={title, author,likes}= blogs.sort((a,b)=>(b.likes -a.likes))[0]
+     
+
+    return  favoriteBlog
+}
+
 
 module.exports= {
-    dummy, getTotalLikes
+    dummy, getTotalLikes,getFavouriteBlog
 }
