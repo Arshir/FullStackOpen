@@ -2,22 +2,40 @@ const blogRounter = require('express').Router()
 const Blog = require('../model/blog')
 
 
-blogRounter.get('/',(req,res)=>{
-
-    Blog.find({})
-    .then(blogs=> res.json(blogs))
-    .catch(error=> res.status(500).end())
+blogRounter.get('/', async (req,res)=>{
+   
+    try{
+        const blogs = await Blog.find({})
+        res.status(200).json(blogs) 
+      }catch(error){
+        res.status(500).json({error: 'Internal server error'})
+      } 
+   
 
 })
 
 
-blogRounter.post('/',(req,res,next)=>{
+blogRounter.post('/',async (req,res,next)=>{
     const blog= new Blog(req.body)
-    blog
-    .save()
-    .then(blog=>{
+    try{
+        // Check if title and url are present in the request body
+        // If not, return a 400 Bad Request response
+        if(!blog.title || !blog.url){
+            return res.status(400).json({error: 'title or url is missing'})
+        }
+
+        if(!blog.likes){
+            blog.likes= 0
+        }
+        await blog.save()
         res.status(201).json(blog)
-    })
+    }catch(error){
+        res.status(500).json({error: 'Internal server error'})
+    }
+    
+   
+      
+    
 })
 
 module.exports= blogRounter

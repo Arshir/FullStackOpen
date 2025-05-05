@@ -19,7 +19,7 @@ const PORT = config.PORT
 
 
 mongoose.connect(MONGODB_URL)
-.then(()=>logger.info('database connection succeeded'))
+.then(()=>logger.info('database connection succeeded',{MONGODB_URL}))
 .catch(error=> logger.error(error))
 
 

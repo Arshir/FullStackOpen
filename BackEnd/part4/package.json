@@ -4,8 +4,9 @@
   "description": "This application help users save information including author, title, URL, and amount of upvotes of interesting blogs they stumbled across on the internet ",
   "main": "index.js",
   "scripts": {
-    "start": "node --watch index.js",
-    "test": "node --test",
+    "start": "cross-env NODE_ENV=production node --watch index.js",
+    "dev": "cross-env NODE_ENV=development node --watch index.js",
+    "test": "cross-env NODE_ENV=test node --test --watch",
     "lint": "eslint ."
   },
   "keywords": [
@@ -15,8 +16,14 @@
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "express-async-errors": "^3.1.1",
     "mongoose": "^8.12.1"
+  },
+  "devDependencies": {
+    "expect": "^29.7.0",
+    "supertest": "^7.1.0"
   }
 }
